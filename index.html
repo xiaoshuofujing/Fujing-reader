@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8">
+    <title>芙憬工作室 - 作品集</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* === CSS Reset & Variables === */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary-color: #94B5E8; /* 主要藍色 */
+            --secondary-color: #A5B6E7; /* 標題柔和藍色 */
+            --background-start: #FFD1DC; /* 粉色 */
+            --background-end: #ADD8E6; /* 淺藍色 */
+            --text-color: #333;
+            --light-text-color: #fff;
+            --card-bg: rgba(255, 255, 255, 0.9);
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+            background: linear-gradient(135deg, var(--background-start) 0%, var(--background-end) 100%);
+            color: var(--text-color);
+            padding-top: 50px;
+        }
+
+        /* === 佈局容器 === */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--secondary-color);
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* === 作品清單樣式 (List) === */
+        .portfolio-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* 列表項目之間的間距 */
+        }
+        
+        /* 單個作品清單項目 */
+        .portfolio-item {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .portfolio-item:hover {
+            background-color: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .portfolio-info {
+            flex-grow: 1; 
+            text-align: left;
+            padding-right: 20px;
+        }
+
+        .portfolio-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            font-size: 1.2em;
+        }
+
+        .portfolio-info p {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .portfolio-tag {
+            display: inline-block;
+            background-color: #D3D3D3; /* 淺灰色標籤 */
+            color: var(--text-color);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            font-weight: 500;
+        }
+
+        .portfolio-link {
+            /* 連結按鈕樣式 */
+            flex-shrink: 0;
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            white-space: nowrap; 
+        }
+
+        .portfolio-link:hover {
+            background-color: #7A9BD6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>芙憬工作室 | 作品展示</h1>
+
+        <div class="portfolio-list" id="portfolioList">
+            </div>
+    </div>
+
+    <script>
+        const portfolioData = [
+            { 
+                id: 1, 
+                title: "那年盛夏的故事", 
+                description: "男主慕容璟川與女主朴妍霜相愛的故事", 
+                type: "純愛,長篇,完結", 
+                link: "https://drive.google.com/drive/folders/1QgUWTDL_cHIwJvHTF1N_zB-3b9Y-UqND?usp=sharing" 
+            },
+			{ 
+                id: 2, 
+                title: "操場中央的人", 
+                description: "無", 
+                type: "小三,短篇,完結,狗血", 
+                link: "https://docs.google.com/document/d/1ftxxlZpw490YhpsTmZ_D_XXHcd907wbF/edit?usp=sharing&ouid=111274208654393177734&rtpof=true&sd=true" 
+            },
+			{ 
+                id: 3, 
+                title: "跑道上的婚約", 
+                description: "男主顧宸青與女主朴霜妍相愛相遇直至永恆", 
+                type: "純愛,長篇,完結,微18", 
+                link: "https://drive.google.com/drive/folders/1iC0zxEstqDqwkXVXcHvgWcC678zqiqLd?usp=sharing" 
+            },
+           
+        ];
+
+        const portfolioList = document.getElementById('portfolioList');
+
+        // === 2. 渲染作品清單項目 ===
+        function renderPortfolio(data) {
+            if (!portfolioList) {
+                console.error("錯誤：找不到 ID 為 'portfolioList' 的元素。");
+                return;
+            }
+            
+            portfolioList.innerHTML = '';
+
+            data.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('portfolio-item');
+
+                itemElement.innerHTML = `
+                    <div class="portfolio-info">
+                        <h3>${item.title}</h3>
+                        <p>${item.description}</p>
+                        <span class="portfolio-tag">${item.type}</span>
+                    </div>
+                    <a href="${item.link}" target="_blank" class="portfolio-link">查看作品</a>
+                `;
+                portfolioList.appendChild(itemElement);
+            });
+        }
+
+        // === 3. 初始化網頁 ===
+        function initPortfolio() {
+            renderPortfolio(portfolioData); // 渲染唯一作品
+        }
+
+        initPortfolio(); // 啟動
+    </script>
+</body>
+</html>
